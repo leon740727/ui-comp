@@ -5,7 +5,6 @@ export class Comp<T> {
     }
 
     init(data: T) {
-        this.setup(data);
         return this;
     }
 
@@ -18,7 +17,7 @@ export class Comp<T> {
     }
 
     static make<T>(cons: {new(elem: JQuery): Comp<T>}, tmpl: JQuery, data: T) {
-        return new cons(tmpl.clone(true)).init(data);
+        return new cons(tmpl.clone(true)).init(data).setup(data);
     }
 }
 
