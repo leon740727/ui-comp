@@ -66,4 +66,7 @@ export class Dialog<T, R> extends Comp<T> {
             });
         });
     }
+    end(result: R) {
+        this.elem.trigger("end", [result]);
+    }
 }
