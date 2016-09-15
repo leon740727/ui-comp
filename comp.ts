@@ -1,3 +1,15 @@
+export class React {
+    /** 這個類別是支援 *.tsx 檔案的 */
+    static createElement(nodeName: string, attr: {}, ...children) {
+        let res = $(`<${nodeName}/>`);
+        if (attr) {
+            Object.keys(attr).map(name => res.attr(name, attr[name]));
+        }
+        children.forEach(c => res.append(c));
+        return res;
+    }
+}
+
 export class Comp<I, S, R> {
     elem: JQuery;
     constructor(elem: JQuery) {
