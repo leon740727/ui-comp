@@ -10,26 +10,22 @@ export class React {
     }
 }
 
-export class Comp<I, S, R> {
+export class Comp<I, S> {
     elem: JQuery;
     constructor(elem: JQuery) {
         this.elem = elem;
     }
 
-    init(data: I): Comp<I, S, R> {
+    init(data: I): Comp<I, S> {
         return this;
     }
 
-    setup(data: S): Comp<I, S, R> {
+    setup(data: S): Comp<I, S> {
         throw "not implement";
     }
 
-    data(): R {
-        throw "not implement";
-    }
-
-    static _make<I, S, R>(cons: {new(elem: JQuery): Comp<I, S, R>}, tmpl: JQuery, initData: I, setupData: S) {
-        return new cons(tmpl.clone(true)).init(initData).setup(setupData);
+    static _make<I, S, T extends Comp<I, S>>(cons: {new(elem: JQuery): T}, tmpl: JQuery, initData: I, setupData: S): T {
+        return new cons(tmpl.clone(true)).init(initData).setup(setupData) as T;
     }
 }
 
@@ -45,7 +41,7 @@ function memoize(target: Object, propertyKey: string, descriptor: TypedPropertyD
     return descriptor;
 }
 
-export class Dialog<I, S, R> extends Comp<I, S, R> {
+export class Dialog<I, S, R> extends Comp<I, S> {
     @memoize
     get cover() {
         return $("<div/>").css({
